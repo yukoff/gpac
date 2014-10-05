@@ -115,9 +115,6 @@ endif
 ifeq ($(DISABLE_M2PS), no)
 LIBGPAC_MEDIATOOLS+=media_tools/mpeg2_ps.o
 endif
-ifeq ($(DISABLE_OGG), no)
-LIBGPAC_MEDIATOOLS+=media_tools/gpac_ogg.o
-endif
 ifeq ($(DISABLE_MCRYPT), no)
 LIBGPAC_MEDIATOOLS+=media_tools/ismacryp.o
 endif
@@ -507,6 +504,15 @@ MEDIATOOLS_CFLAGS+=-I"$(LOCAL_INC_PATH)/png"
 endif
 endif
 
+#6 - OGG support
+ifeq ($(CONFIG_OGG), no)
+else
+LINKLIBS+= -logg
+ifeq ($(CONFIG_OGG), local)
+NEED_LOCAL_LIB="yes"
+MEDIATOOLS_CFLAGS+=-I"$(LOCAL_INC_PATH)/ogg"
+endif
+endif
 
 ## libgpac compositor compilation options
 COMPOSITOR_CFLAGS=
