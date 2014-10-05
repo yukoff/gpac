@@ -1,0 +1,8 @@
+110_all_implicitdecls.patch
+210_all_system_libogg.patch
+gpac-0.5.0-build-fixes.patch
+gpac-0.5.0-libav9.patch
+gpac-0.5.0-ffmpeg2.patch
+gpac-0.5.0-mp42ts.patch
+gpac-0.5.0-respect_ldflags.patch
+
