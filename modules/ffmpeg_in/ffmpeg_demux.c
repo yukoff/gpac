@@ -262,7 +262,7 @@ static Bool FFD_CanHandleURL(GF_InputService *plug, const char *url)
 			return 0;
 		}
 	}
-	if (!ctx || av_find_stream_info(ctx) <0) goto exit;
+    if (!ctx || avformat_find_stream_info(ctx, NULL) <0) goto exit;
 
 	/*figure out if we can use codecs or not*/
 	has_video = has_audio = 0;
@@ -594,7 +594,7 @@ static GF_Err FFD_ConnectService(GF_InputService *plug, GF_ClientService *serv, 
 			}
 			/*setup downloader*/
 			av_in->flags |= AVFMT_NOFILE;
-#ifdef USE_AVFORMAT_OPEN_INPUT /*commit ffmpeg 603b8bc2a109978c8499b06d2556f1433306eca7*/
+#ifdef USE_AVFORMAT_OPEN_INPUT /* commit ffmpeg 2fb7501938b7103624c9bef740ca498258cacdab */
 			res = avformat_open_input(&ffd->ctx, szName, av_in, NULL);
 #else
 			res = av_open_input_stream(&ffd->ctx, &ffd->io, szName, av_in, NULL);
@@ -629,7 +629,7 @@ static GF_Err FFD_ConnectService(GF_InputService *plug, GF_ClientService *serv, 
 
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_CONTAINER, ("[FFMPEG] looking for streams in %s - %d streams - type %s\n", ffd->ctx->filename, ffd->ctx->nb_streams, ffd->ctx->iformat->name));
 
-	res = av_find_stream_info(ffd->ctx);
+	res = avformat_find_stream_info(ffd->ctx, NULL);
 	if (res <0) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_CONTAINER, ("[FFMPEG] cannot locate streams - error %d\n", res));
 		e = GF_NOT_SUPPORTED;
@@ -696,7 +696,7 @@ static GF_Err FFD_ConnectService(GF_InputService *plug, GF_ClientService *serv, 
 #endif
 			ffd->ctx = NULL;
 			open_file(&ffd->ctx, szName, av_in);
-			av_find_stream_info(ffd->ctx);
+			avformat_find_stream_info(ffd->ctx, NULL);
 		}
 	}
 
