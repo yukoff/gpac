@@ -92,7 +92,9 @@ endif
 endif
 ifeq ($(DISABLE_ISOFF), no)
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/MP4Box "$(DESTDIR)$(prefix)/bin"
+ifeq ($(DISABLE_M2TS), no)
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/MP42TS "$(DESTDIR)$(prefix)/bin"
+endif
 endif
 ifeq ($(DISABLE_PLAYER), no)
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/MP4Client "$(DESTDIR)$(prefix)/bin"
