@@ -1,8 +1,7 @@
-Index: gpac-0.5.0.svn4668/configure
-===================================================================
---- gpac-0.5.0.svn4668.orig/configure
-+++ gpac-0.5.0.svn4668/configure
-@@ -1149,27 +1149,40 @@ int main( void ) { return 0; }
+diff -ur gpac-0.5.0.svn5456.orig/configure gpac-0.5.0.svn5456/configure
+--- gpac-0.5.0.svn5456.orig/configure	2014-06-23 05:26:35.000000000 -0400
++++ gpac-0.5.0.svn5456/configure	2014-10-04 20:53:38.582212223 -0400
+@@ -1166,27 +1166,40 @@
  EOF
  
  if test "$cross_prefix" = "" ; then
@@ -49,7 +48,7 @@ Index: gpac-0.5.0.svn4668/configure
  
  #look for MAD support
  cat > $TMPC << EOF
-@@ -2823,6 +2836,7 @@ if test "$has_jpeg" != "no" ; then
+@@ -2915,6 +2928,7 @@
  fi
  
  echo "CONFIG_PNG=$has_png" >> config.mak
@@ -57,11 +56,10 @@ Index: gpac-0.5.0.svn4668/configure
  if test "$has_png" != "no" ; then
      echo "#define GPAC_HAS_PNG" >> $TMPH
  fi
-Index: gpac-0.5.0.svn4668/src/Makefile
-===================================================================
---- gpac-0.5.0.svn4668.orig/src/Makefile
-+++ gpac-0.5.0.svn4668/src/Makefile
-@@ -495,7 +495,7 @@ endif
+diff -ur gpac-0.5.0.svn5456.orig/src/Makefile gpac-0.5.0.svn5456/src/Makefile
+--- gpac-0.5.0.svn5456.orig/src/Makefile	2014-09-24 15:09:14.000000000 -0400
++++ gpac-0.5.0.svn5456/src/Makefile	2014-10-04 20:53:38.583212256 -0400
+@@ -501,7 +501,7 @@
  #5 - PNG support
  ifeq ($(CONFIG_PNG), no)
  else

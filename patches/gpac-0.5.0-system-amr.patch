@@ -1,8 +1,25 @@
-Index: gpac-0.5.0.svn4668/modules/amr_float_dec/Makefile
-===================================================================
---- gpac-0.5.0.svn4668.orig/modules/amr_float_dec/Makefile
-+++ gpac-0.5.0.svn4668/modules/amr_float_dec/Makefile
-@@ -18,19 +18,19 @@ endif
+diff -ur gpac-0.5.0.svn5456.orig/modules/amr_float_dec/amr_float_dec.c gpac-0.5.0.svn5456/modules/amr_float_dec/amr_float_dec.c
+--- gpac-0.5.0.svn5456.orig/modules/amr_float_dec/amr_float_dec.c	2014-04-26 16:08:43.000000000 -0400
++++ gpac-0.5.0.svn5456/modules/amr_float_dec/amr_float_dec.c	2014-10-04 20:54:55.285877782 -0400
+@@ -46,12 +46,12 @@
+ 
+ #ifdef GPAC_HAS_AMR_FT
+ /*AMR WB*/
+-#include "amr_nb_ft/interf_dec.h"
++#include <amrnb/interf_dec.h>
+ #endif
+ 
+ #ifdef GPAC_HAS_AMR_FT_WB
+ /*AMR WB*/
+-#include "amr_wb_ft/dec_if.h"
++#include <amrwb/dec_if.h>
+ #endif
+ 
+ #endif
+diff -ur gpac-0.5.0.svn5456.orig/modules/amr_float_dec/Makefile gpac-0.5.0.svn5456/modules/amr_float_dec/Makefile
+--- gpac-0.5.0.svn5456.orig/modules/amr_float_dec/Makefile	2014-01-24 14:44:54.000000000 -0500
++++ gpac-0.5.0.svn5456/modules/amr_float_dec/Makefile	2014-10-04 20:54:55.285877782 -0400
+@@ -18,19 +18,19 @@
  #common obj
  OBJS=../amr_dec/amr_in.o amr_float_dec.o
  
@@ -26,7 +43,7 @@ Index: gpac-0.5.0.svn4668/modules/amr_float_dec/Makefile
  endif
  
  
-@@ -45,7 +45,7 @@ all: $(LIB)
+@@ -45,7 +45,7 @@
  
  
  $(LIB): $(OBJS)
@@ -35,22 +52,3 @@ Index: gpac-0.5.0.svn4668/modules/amr_float_dec/Makefile
  
  clean: 
  	rm -f $(OBJS) ../../bin/gcc/$(LIB)
-Index: gpac-0.5.0.svn4668/modules/amr_float_dec/amr_float_dec.c
-===================================================================
---- gpac-0.5.0.svn4668.orig/modules/amr_float_dec/amr_float_dec.c
-+++ gpac-0.5.0.svn4668/modules/amr_float_dec/amr_float_dec.c
-@@ -46,12 +46,12 @@
- 
- #ifdef GPAC_HAS_AMR_FT
- /*AMR WB*/
--#include "amr_nb_ft/interf_dec.h"
-+#include <amrnb/interf_dec.h>
- #endif
- 
- #ifdef GPAC_HAS_AMR_FT_WB
- /*AMR WB*/
--#include "amr_wb_ft/dec_if.h"
-+#include <amrwb/dec_if.h>
- #endif
- 
- #endif

@@ -1,3 +1,15 @@
+# opensuse patches
+gpac-0.5.0-smjs_call_prop_stub.patch
+gpac-0.5.0-enable_V4Studio.patch
+gpac-0.5.0-SVGGen_abuild.patch
+gpac-0.5.0-64bit-portability.patch
+gpac-0.5.0-libpng-version-detection.patch
+gpac-0.5.0-system-amr.patch
+gpac-0.5.0-no-pc.patch
+gpac-0.5.0-js_getparent.patch
+gpac-0.5.0-bufferoverflow.patch
+gpac-0.5.0-x264-export.patch
+
 # gentoo
 110_all_implicitdecls.patch
 210_all_system_libogg.patch

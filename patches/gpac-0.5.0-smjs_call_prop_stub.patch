@@ -1,8 +1,7 @@
-Index: gpac-0.5.0.svn4668/include/gpac/internal/smjs_api.h
-===================================================================
---- gpac-0.5.0.svn4668.orig/include/gpac/internal/smjs_api.h
-+++ gpac-0.5.0.svn4668/include/gpac/internal/smjs_api.h
-@@ -47,7 +47,7 @@ typedef struct
+diff -ur gpac-0.5.0.svn5456.orig/include/gpac/internal/smjs_api.h gpac-0.5.0.svn5456/include/gpac/internal/smjs_api.h
+--- gpac-0.5.0.svn5456.orig/include/gpac/internal/smjs_api.h	2014-09-03 14:07:42.000000000 -0400
++++ gpac-0.5.0.svn5456/include/gpac/internal/smjs_api.h	2014-10-04 20:37:04.902760180 -0400
+@@ -51,7 +51,7 @@
  	JSObject *_proto;
  } GF_JSClass;
  

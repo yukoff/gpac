@@ -1,8 +1,7 @@
-Index: gpac-0.5.0.svn5178/applications/Makefile
-===================================================================
---- gpac-0.5.0.svn5178.orig/applications/Makefile
-+++ gpac-0.5.0.svn5178/applications/Makefile
-@@ -25,15 +25,15 @@ V4STUDIODIR=
+diff -ur gpac-0.5.0.svn5456.orig/applications/Makefile gpac-0.5.0.svn5456/applications/Makefile
+--- gpac-0.5.0.svn5456.orig/applications/Makefile	2014-08-08 07:30:37.000000000 -0400
++++ gpac-0.5.0.svn5456/applications/Makefile	2014-10-04 20:38:57.296656928 -0400
+@@ -27,15 +27,15 @@
  INSTDIRS=mp4client
  ifeq ($(CONFIG_XUL),no)
  else
@@ -23,11 +22,10 @@ Index: gpac-0.5.0.svn5178/applications/Makefile
  endif
  
  ALLDIRS=$(APPDIRS)
-Index: gpac-0.5.0.svn5178/applications/osmo4_wx/Makefile
-===================================================================
---- gpac-0.5.0.svn5178.orig/applications/osmo4_wx/Makefile
-+++ gpac-0.5.0.svn5178/applications/osmo4_wx/Makefile
-@@ -46,7 +46,7 @@ SRCS := $(OBJS:.o=.cpp)
+diff -ur gpac-0.5.0.svn5456.orig/applications/osmo4_wx/Makefile gpac-0.5.0.svn5456/applications/osmo4_wx/Makefile
+--- gpac-0.5.0.svn5456.orig/applications/osmo4_wx/Makefile	2014-01-24 14:44:54.000000000 -0500
++++ gpac-0.5.0.svn5456/applications/osmo4_wx/Makefile	2014-10-04 20:38:57.296656928 -0400
+@@ -46,7 +46,7 @@
  all: $(PROG)
  
  Osmo4$(EXE): $(OBJS)
@@ -36,14 +34,13 @@ Index: gpac-0.5.0.svn5178/applications/osmo4_wx/Makefile
  
  clean: 
  	rm -f $(OBJS) ../../bin/gcc/$(PROG)
-Index: gpac-0.5.0.svn5178/applications/osmozilla/osmo_npapi.cpp
-===================================================================
---- gpac-0.5.0.svn5178.orig/applications/osmozilla/osmo_npapi.cpp
-+++ gpac-0.5.0.svn5178/applications/osmozilla/osmo_npapi.cpp
-@@ -372,10 +372,11 @@ NPError NS_PluginGetValue(NPPVariable aV
+diff -ur gpac-0.5.0.svn5456.orig/applications/osmozilla/osmo_npapi.cpp gpac-0.5.0.svn5456/applications/osmozilla/osmo_npapi.cpp
+--- gpac-0.5.0.svn5456.orig/applications/osmozilla/osmo_npapi.cpp	2014-04-26 16:08:43.000000000 -0400
++++ gpac-0.5.0.svn5456/applications/osmozilla/osmo_npapi.cpp	2014-10-04 20:40:21.768585241 -0400
+@@ -372,10 +372,11 @@
  	/* explicit plugin call */ \
  	"application/x-gpac::GPAC plugin;" \
- 
+  
 -char * NP_GetMIMEDescription(void)
 +/*char * NP_GetMIMEDescription(void)
  {
