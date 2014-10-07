@@ -102,7 +102,7 @@ static void FFDEC_LoadDSI(FFDec *ffd, GF_BitStream *bs, AVCodec *codec, AVCodecC
 	}
 
 	switch (codec->id) {
-	case CODEC_ID_SVQ3:
+	case AV_CODEC_ID_SVQ3:
 	{
 		u32 at_type, size;
 		size = gf_bs_read_u32(bs);
@@ -240,10 +240,10 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 			(*ctx)->codec_type = AVMEDIA_TYPE_VIDEO;
 			switch (ffd->oti) {
 			case GPAC_OTI_VIDEO_MPEG4_PART2:
-				codec_id = CODEC_ID_MPEG4;
+				codec_id = AV_CODEC_ID_MPEG4;
 				break;
 			case GPAC_OTI_VIDEO_AVC:
-				codec_id = CODEC_ID_H264;
+				codec_id = AV_CODEC_ID_H264;
 				break;
 #ifdef HAS_HEVC
 			case GPAC_OTI_VIDEO_HEVC:
@@ -257,14 +257,14 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 			case GPAC_OTI_VIDEO_MPEG2_SPATIAL:
 			case GPAC_OTI_VIDEO_MPEG2_HIGH:
 			case GPAC_OTI_VIDEO_MPEG2_422:
-				codec_id = CODEC_ID_MPEG2VIDEO;
+				codec_id = AV_CODEC_ID_MPEG2VIDEO;
 				break;
 			case GPAC_OTI_IMAGE_JPEG:
-				codec_id = CODEC_ID_MJPEG;
+				codec_id = AV_CODEC_ID_MJPEG;
 				ffd->is_image=1;
 				break;
 			case 0xFF:
-				codec_id = CODEC_ID_SVQ3;
+				codec_id = AV_CODEC_ID_SVQ3;
 				break;
 			}
 		} else if (ffd->st==GF_STREAM_AUDIO) {
@@ -273,18 +273,18 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 			case GPAC_OTI_AUDIO_MPEG2_PART3:
 			case GPAC_OTI_AUDIO_MPEG1:
 				(*ctx)->frame_size = 1152;
-				codec_id = CODEC_ID_MP2;
+				codec_id = AV_CODEC_ID_MP2;
 				break;
 			case GPAC_OTI_AUDIO_AC3:
-				codec_id = CODEC_ID_AC3;
+				codec_id = AV_CODEC_ID_AC3;
 				break;
 			case GPAC_OTI_AUDIO_EAC3:
-				codec_id = CODEC_ID_EAC3;
+				codec_id = AV_CODEC_ID_EAC3;
 				break;
 			}
 		}
 		else if ((ffd->st==GF_STREAM_ND_SUBPIC) && (ffd->oti==0xe0)) {
-			codec_id = CODEC_ID_DVD_SUBTITLE;
+			codec_id = AV_CODEC_ID_DVD_SUBTITLE;
 		}
 		*codec = avcodec_find_decoder(codec_id);
 	}
@@ -375,8 +375,8 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 #endif //HAS_HEVC
 	if (!ffd->output_cb_size) ffd->output_cb_size = 4;
 
-	if (codec_id == CODEC_ID_RAWVIDEO) {
-		(*ctx)->codec_id = CODEC_ID_RAWVIDEO;
+	if (codec_id == AV_CODEC_ID_RAWVIDEO) {
+		(*ctx)->codec_id = AV_CODEC_ID_RAWVIDEO;
 		(*ctx)->pix_fmt = ffd->raw_pix_fmt;
 		if ((*ctx)->extradata && strstr((char *) (*ctx)->extradata, "BottomUp")) ffd->flipped = 1;
 	} else {
@@ -388,7 +388,7 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 	}
 	/*setup audio streams*/
 	if (ffd->st==GF_STREAM_AUDIO) {
-		if ((*codec)->id == CODEC_ID_MP2) {
+		if ((*codec)->id == AV_CODEC_ID_MP2) {
 			(*ctx)->frame_size = ((*ctx)->sample_rate > 24000) ? 1152 : 576;
 		}
 		/*may be 0 (cfg not known yet)*/
@@ -408,17 +408,17 @@ static GF_Err FFDEC_AttachStream(GF_BaseDecoder *plug, GF_ESD *esd)
 
 	} else {
 		switch ((*codec)->id) {
-		case CODEC_ID_MJPEG:
-		case CODEC_ID_MJPEGB:
-		case CODEC_ID_LJPEG:
+		case AV_CODEC_ID_MJPEG:
+		case AV_CODEC_ID_MJPEGB:
+		case AV_CODEC_ID_LJPEG:
 #if (LIBAVCODEC_VERSION_INT > AV_VERSION_INT(51, 20, 0))
-		case CODEC_ID_GIF:
+		case AV_CODEC_ID_GIF:
 #endif
-		case CODEC_ID_RAWVIDEO:
+		case AV_CODEC_ID_RAWVIDEO:
 			ffd->pix_fmt = GF_PIXEL_RGB_24;
 			break;
 
-		case CODEC_ID_DVD_SUBTITLE:
+		case AV_CODEC_ID_DVD_SUBTITLE:
 #if !defined(FF_API_AVFRAME_LAVC)
 			*frame = avcodec_alloc_frame();
 #else
@@ -843,7 +843,7 @@ redecode:
 	}
 
 
-	if ( ctx->codec_id == CODEC_ID_RAWVIDEO) {
+	if ( ctx->codec_id == AV_CODEC_ID_RAWVIDEO) {
 		if (*outBufferLength != ffd->out_size) {
 			*outBufferLength = ffd->out_size;
 			return GF_BUFFER_TOO_SMALL;
@@ -940,7 +940,7 @@ redecode:
 				/*OK we loose the DSI stored in the codec context, but H263 doesn't need any, and if we're
 				here this means the DSI was broken, so no big deal*/
 				avcodec_close(ctx);
-				*codec = avcodec_find_decoder(CODEC_ID_H263);
+				*codec = avcodec_find_decoder(AV_CODEC_ID_H263);
 
 #ifdef USE_AVCTX3
 				if (! (*codec) || (avcodec_open2(ctx, *codec, NULL)<0)) return GF_NON_COMPLIANT_BITSTREAM;
@@ -1263,13 +1263,13 @@ static u32 FFDEC_CanHandleStream(GF_BaseDecoder *plug, u32 StreamType, GF_ESD *e
 		switch (ffd->oti) {
 		case GPAC_OTI_AUDIO_MPEG2_PART3:
 		case GPAC_OTI_AUDIO_MPEG1:
-			codec_id = CODEC_ID_MP2;
+			codec_id = AV_CODEC_ID_MP2;
 			break;
 		case GPAC_OTI_AUDIO_AC3:
-			codec_id = CODEC_ID_AC3;
+			codec_id = AV_CODEC_ID_AC3;
 			break;
 		case GPAC_OTI_AUDIO_EAC3:
-			codec_id = CODEC_ID_EAC3;
+			codec_id = AV_CODEC_ID_EAC3;
 			break;
 		}
 	}
@@ -1309,11 +1309,11 @@ static u32 FFDEC_CanHandleStream(GF_BaseDecoder *plug, u32 StreamType, GF_ESD *e
 		switch (ffd->oti) {
 		/*MPEG-4 v1 simple profile*/
 		case GPAC_OTI_VIDEO_MPEG4_PART2:
-			codec_id = CODEC_ID_MPEG4;
+			codec_id = AV_CODEC_ID_MPEG4;
 			break;
 		/*H264 (not std OTI, just the way we use it internally)*/
 		case GPAC_OTI_VIDEO_AVC:
-			codec_id = CODEC_ID_H264;
+			codec_id = AV_CODEC_ID_H264;
 			break;
 #ifdef HAS_HEVC
 		case GPAC_OTI_VIDEO_HEVC:
@@ -1329,11 +1329,11 @@ static u32 FFDEC_CanHandleStream(GF_BaseDecoder *plug, u32 StreamType, GF_ESD *e
 		case GPAC_OTI_VIDEO_MPEG2_SPATIAL:
 		case GPAC_OTI_VIDEO_MPEG2_HIGH:
 		case GPAC_OTI_VIDEO_MPEG2_422:
-			codec_id = CODEC_ID_MPEG2VIDEO;
+			codec_id = AV_CODEC_ID_MPEG2VIDEO;
 			break;
 		/*JPEG*/
 		case GPAC_OTI_IMAGE_JPEG:
-			codec_id = CODEC_ID_MJPEG;
+			codec_id = AV_CODEC_ID_MJPEG;
 			/*return maybe supported as FFMPEG JPEG decoder has some issues with many files, so let's use it only if no
 			other dec is available*/
 			if (avcodec_find_decoder(codec_id) != NULL)
