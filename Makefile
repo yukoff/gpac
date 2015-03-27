@@ -184,9 +184,6 @@ else
 	$(INSTALL) $(INSTFLAGS) -m 755 bin/gcc/libgpac.$(DYN_LIB_SUFFIX).$(VERSION_SONAME) $(DESTDIR)$(prefix)/$(libdir)/libgpac.$(DYN_LIB_SUFFIX).$(VERSION_SONAME)
 	ln -sf libgpac.$(DYN_LIB_SUFFIX).$(VERSION_SONAME) $(DESTDIR)$(prefix)/$(libdir)/libgpac.so.$(VERSION_MAJOR)
 	ln -sf libgpac.$(DYN_LIB_SUFFIX).$(VERSION_SONAME) $(DESTDIR)$(prefix)/$(libdir)/libgpac.so
-ifeq ($(DESTDIR)$(prefix),$(prefix))
-	ldconfig || true
-endif
 endif
 endif
 
@@ -203,7 +200,9 @@ ifeq ($(GPAC_ENST), yes)
 	$(INSTALL) $(INSTFLAGS) -m 644 $(SRC_PATH)/include/gpac/enst/*.h "$(DESTDIR)$(prefix)/include/gpac/enst"
 endif
 	mkdir -p "$(DESTDIR)$(prefix)/$(libdir)"
+ifeq ($(STATICLIBS),yes)
 	$(INSTALL) $(INSTFLAGS) -m 644 "./bin/gcc/libgpac_static.a" "$(DESTDIR)$(prefix)/$(libdir)"
+endif
 	$(MAKE) installdylib
 
 uninstall-lib:

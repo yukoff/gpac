@@ -612,12 +612,16 @@ compositor: $(LIBGPAC_COMPOSITOR)
 	@echo "OBJS $(OBJS)"
 	@echo "LIBS $(EXTRALIBS)"
 ifeq ($(CONFIG_DARWIN),yes)
+ifeq ($(STATICLIBS),yes)
 	$(LIBTOOL) -s -o ../bin/gcc/libgpac_static.a $(OBJS)
 	$(RANLIB) ../bin/gcc/libgpac_static.a
+endif
 	$(CC) $(SHFLAGS) $(LD_SONAME) $(LDFLAGS) -o $@ $(OBJS) $(EXTRALIBS) 
 else
+ifeq ($(STATICLIBS),yes)
 	$(AR) cr ../bin/gcc/libgpac_static.a $(OBJS)
 	$(RANLIB) ../bin/gcc/libgpac_static.a
+endif
 	$(CC) $(SHFLAGS) $(LD_SONAME) $(LDFLAGS) -o $@ $(OBJS) $(EXTRALIBS)
 ifeq (,$(findstring yes, $(CONFIG_WIN32)))
 	mv $@ $@.$(VERSION_SONAME)
