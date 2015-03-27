@@ -398,7 +398,7 @@ wxGPACControl::wxGPACControl(wxWindow *parent)
 
 	/*audio dec enum*/
 	sOpt = gf_cfg_get_key(cfg, "Systems", "DefAudioDec");
-	u32 count = gf_modules_get_count(m_pApp->m_user.modules);
+	count = gf_modules_get_count(m_pApp->m_user.modules);
 	GF_BaseDecoder *ifc_d;
 	select = 0;
 	s32 to_sel = 0;

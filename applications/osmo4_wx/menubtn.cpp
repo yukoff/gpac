@@ -761,7 +761,7 @@ void wxMenuButton::OnButton( wxCommandEvent &event)
 		bool check_next = FALSE;
 
 		// find the next available radio item to check
-		for (wxMenuItemList::Node *node = items.GetFirst(); node; node = node->GetNext())
+		for (wxMenuItemList::compatibility_iterator node = items.GetFirst(); node; node = node->GetNext())
 		{
 			wxMenuItem *mi = (wxMenuItem*)node->GetData();
 			if (mi && (mi->GetKind() == wxITEM_RADIO))
@@ -801,7 +801,7 @@ int wxMenuButton::GetSelection() const
 
 	const wxMenuItemList &items = m_menu->GetMenuItems();
 
-	for (wxMenuItemList::Node *node = items.GetFirst(); node; node = node->GetNext())
+	for (wxMenuItemList::compatibility_iterator node = items.GetFirst(); node; node = node->GetNext())
 	{
 		wxMenuItem *mi = (wxMenuItem*)node->GetData();
 		if (mi && (mi->GetKind() == wxITEM_RADIO))
