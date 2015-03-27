@@ -28,6 +28,7 @@
 #include <gpac/utf.h>
 #include <gpac/network.h>
 #include <gpac/xml.h>
+#include <gpac/network.h>
 #include <gpac/internal/bifs_dev.h>
 #include <gpac/internal/scenegraph_dev.h>
 #include <gpac/nodes_x3d.h>
