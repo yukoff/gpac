@@ -46,7 +46,7 @@ SRCS := $(OBJS:.o=.cpp)
 all: $(PROG)
 
 Osmo4$(EXE): $(OBJS)
-	$(CC) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) -L../../bin/gcc -lgpac $(WX_LFLAGS) $(LINKFLAGS)
+	$(CC) $(LDFLAGS) -o ../../bin/gcc/$@ $(OBJS) -L../../bin/gcc -lgpac -lX11 -lstdc++ -lm $(WX_LFLAGS) `pkg-config --libs gtk+-2.0` $(LINKFLAGS)
 
 clean: 
 	rm -f $(OBJS) ../../bin/gcc/$(PROG)
