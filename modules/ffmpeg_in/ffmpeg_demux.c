@@ -262,7 +262,7 @@ static Bool FFD_CanHandleURL(GF_InputService *plug, const char *url)
 			return 0;
 		}
 	}
-	if (!ctx || av_find_stream_info(ctx) <0) goto exit;
+	if (!ctx || avformat_find_stream_info(ctx, NULL) <0) goto exit;
 
 	/*figure out if we can use codecs or not*/
 	has_video = has_audio = 0;
@@ -333,13 +333,13 @@ static GF_ESD *FFD_GetESDescriptor(FFDemux *ffd, Bool for_audio)
 		AVCodecContext *dec = ffd->ctx->streams[ffd->audio_st]->codec;
 		esd->slConfig->timestampResolution = ffd->audio_tscale.den;
 		switch (dec->codec_id) {
-		case CODEC_ID_MP2:
+		case AV_CODEC_ID_MP2:
 			esd->decoderConfig->objectTypeIndication = GPAC_OTI_AUDIO_MPEG1;
 			break;
-		case CODEC_ID_MP3:
+		case AV_CODEC_ID_MP3:
 			esd->decoderConfig->objectTypeIndication = GPAC_OTI_AUDIO_MPEG2_PART3;
 			break;
-		case CODEC_ID_AAC:
+		case AV_CODEC_ID_AAC:
 			if (!dec->extradata_size) goto opaque_audio;
 			esd->decoderConfig->objectTypeIndication = GPAC_OTI_AUDIO_AAC_MPEG4;
 			esd->decoderConfig->decoderSpecificInfo->dataLength = dec->extradata_size;
@@ -374,25 +374,25 @@ opaque_audio:
 		AVCodecContext *dec = ffd->ctx->streams[ffd->video_st]->codec;
 		esd->slConfig->timestampResolution = ffd->video_tscale.den;
 		switch (dec->codec_id) {
-		case CODEC_ID_MPEG4:
+		case AV_CODEC_ID_MPEG4:
 			/*there is a bug in fragmentation of raw H264 in ffmpeg, the NALU startcode (0x00000001) is split across
 			two frames - we therefore force internal ffmpeg codec ID to avoid NALU size recompute
 			at the decoder level*/
-//		case CODEC_ID_H264:
+//		case AV_CODEC_ID_H264:
 			/*if dsi not detected force use ffmpeg*/
 			if (!dec->extradata_size) goto opaque_video;
 			/*otherwise use any MPEG-4 Visual*/
-			esd->decoderConfig->objectTypeIndication = (dec->codec_id==CODEC_ID_H264) ? GPAC_OTI_VIDEO_AVC : GPAC_OTI_VIDEO_MPEG4_PART2;
+			esd->decoderConfig->objectTypeIndication = (dec->codec_id==AV_CODEC_ID_H264) ? GPAC_OTI_VIDEO_AVC : GPAC_OTI_VIDEO_MPEG4_PART2;
 			esd->decoderConfig->decoderSpecificInfo->dataLength = dec->extradata_size;
 			esd->decoderConfig->decoderSpecificInfo->data = gf_malloc(sizeof(char)*dec->extradata_size);
 			memcpy(esd->decoderConfig->decoderSpecificInfo->data,
 			       dec->extradata,
 			       sizeof(char)*dec->extradata_size);
 			break;
-		case CODEC_ID_MPEG1VIDEO:
+		case AV_CODEC_ID_MPEG1VIDEO:
 			esd->decoderConfig->objectTypeIndication = GPAC_OTI_VIDEO_MPEG1;
 			break;
-		case CODEC_ID_MPEG2VIDEO:
+		case AV_CODEC_ID_MPEG2VIDEO:
 			esd->decoderConfig->objectTypeIndication = GPAC_OTI_VIDEO_MPEG2_422;
 			break;
 		default:
@@ -594,7 +594,7 @@ static GF_Err FFD_ConnectService(GF_InputService *plug, GF_ClientService *serv, 
 			}
 			/*setup downloader*/
 			av_in->flags |= AVFMT_NOFILE;
-#ifdef USE_AVFORMAT_OPEN_INPUT /*commit ffmpeg 603b8bc2a109978c8499b06d2556f1433306eca7*/
+#ifdef USE_AVFORMAT_OPEN_INPUT /* commit ffmpeg 2fb7501938b7103624c9bef740ca498258cacdab */
 			res = avformat_open_input(&ffd->ctx, szName, av_in, NULL);
 #else
 			res = av_open_input_stream(&ffd->ctx, &ffd->io, szName, av_in, NULL);
@@ -629,7 +629,7 @@ static GF_Err FFD_ConnectService(GF_InputService *plug, GF_ClientService *serv, 
 
 	GF_LOG(GF_LOG_DEBUG, GF_LOG_CONTAINER, ("[FFMPEG] looking for streams in %s - %d streams - type %s\n", ffd->ctx->filename, ffd->ctx->nb_streams, ffd->ctx->iformat->name));
 
-	res = av_find_stream_info(ffd->ctx);
+	res = avformat_find_stream_info(ffd->ctx, NULL);
 	if (res <0) {
 		GF_LOG(GF_LOG_ERROR, GF_LOG_CONTAINER, ("[FFMPEG] cannot locate streams - error %d\n", res));
 		e = GF_NOT_SUPPORTED;

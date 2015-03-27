@@ -349,7 +349,7 @@ int dc_video_decoder_read(VideoInputFile *video_input_file, VideoInputData *vide
 				//But if the input is raw and there is no need to decode then
 				// the packet is directly passed for decoded frame. We must wait until rescale is done before freeing it
 
-				if (codec_ctx->codec->id == CODEC_ID_RAWVIDEO) {
+				if (codec_ctx->codec->id == AV_CODEC_ID_RAWVIDEO) {
 					video_data_node->nb_raw_frames_ref = video_input_file->nb_consumers;
 
 					video_data_node->raw_packet = packet;
