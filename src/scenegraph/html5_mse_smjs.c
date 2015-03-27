@@ -761,7 +761,7 @@ void gf_arraybuffer_del(GF_HTML_ArrayBuffer *buffer, Bool del_js)
 	if (buffer) {
 		if (del_js && buffer->_this) {
 			/*if we have a JS object, make sure the parent XHR doesn't point to us ...*/
-			JSObject *xhro = JS_GetParent(buffer->c, buffer->_this);
+			JSObject *xhro = JS_GetParent(buffer->_this);
 			if (xhro) {
 				void *xhr_ctx = SMJS_GET_PRIVATE(buffer->c, xhro);
 				xhr_del_array_buffer(xhr_ctx);
