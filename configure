@@ -348,7 +348,7 @@ for opt do
             ;;
         --cpu=*) cpu=`echo $opt | cut -d '=' -f 2`
             ;;
-        --enable-debug) debuginfo="yes"; no_gcc_opt="yes"
+        --enable-debug) debuginfo="yes";
             ;;
         --disable-opt) no_gcc_opt="yes"
             ;;
@@ -651,7 +651,7 @@ fi
 
 #GCC opt
 if test "$no_gcc_opt" = "no"; then
-    CFLAGS="-O3 $CFLAGS"
+    CFLAGS="-O2 $CFLAGS"
 else
     CFLAGS="-O0 $CFLAGS"
 fi
