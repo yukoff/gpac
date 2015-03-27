@@ -747,11 +747,10 @@ redecode:
 			gotpic = ffd->audio_frame->nb_samples * 2 * ctx->channels;
 
 		}
+		gotpic = AVCODEC_MAX_AUDIO_FRAME_SIZE;
 #elif defined(USE_AVCODEC2)
-		gotpic = 192000;
 		len = avcodec_decode_audio3(ctx, (short *)ffd->audio_buf, &gotpic, &pkt);
 #else
-		gotpic = AVCODEC_MAX_AUDIO_FRAME_SIZE;
 		len = avcodec_decode_audio2(ctx, (short *)ffd->audio_buf, &gotpic, inBuffer + ffd->frame_start, inBufferLength - ffd->frame_start);
 #endif
 		if (len<0) {

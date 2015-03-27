@@ -97,6 +97,16 @@ void gf_av_vlog(void* avcl, int level, const char *fmt, va_list vl);
 #endif
 
 
+/* commit ffmpeg e0aa5e772bbe4c52182a5db321b0da6b98205ef1 */
+#ifndef AVCODEC_MAX_AUDIO_FRAME_SIZE
+#ifdef MAX_AUDIO_FRAME_SIZE
+#define AVCODEC_MAX_AUDIO_FRAME_SIZE MAX_AUDIO_FRAME_SIZE
+#else
+#define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000 // 1 second of 48khz 32bit audio
+#endif
+#endif
+
+
 #ifndef FFMPEG_OLD_HEADERS
 
 #if ((LIBAVCODEC_VERSION_MAJOR == 52) && (LIBAVCODEC_VERSION_MINOR <= 20)) || (LIBAVCODEC_VERSION_MAJOR < 52)
@@ -140,7 +150,7 @@ typedef struct
 	u32 output_cb_size;
 	/*for audio packed frames*/
 	u32 frame_start;
-	char audio_buf[192000];
+	char audio_buf[AVCODEC_MAX_AUDIO_FRAME_SIZE];
 	Bool check_h264_isma;
 
 	u32 base_ES_ID;
